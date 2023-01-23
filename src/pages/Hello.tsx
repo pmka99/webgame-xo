@@ -1,8 +1,18 @@
+import axios from "axios";
+import bodyParser from "body-parser";
 import { GetServerSideProps } from "next";
+import { NoFallbackError } from "next/dist/server/base-server";
+import { useEffect } from "react";
 import { Context } from "vm";
+// import fetch from 'node-fetch'
+var xx={};
+const fu1=(x:any)=>{
+    xx=x;
+}
 
-export default function Hello({response}:Context){
+export default function Hello({response}:any){
     console.log(response)
+
     return(
         <>  
             {response.data.hello}
@@ -11,27 +21,30 @@ export default function Hello({response}:Context){
         </>
     )
 }                   
-export const getServerSideProps:GetServerSideProps=async(context:Context)=>{
+export const getServerSideProps:GetServerSideProps=async()=>{
     let data={
         query:`
             query{
                 hello
             }
         `
-    }
+    };
     let res=await fetch('http://localhost:3000/api/graphql',
         {
             method:'POST',
-            headers:{"content-type":"application/json"},
+            headers:{"Content-Type":"application/json"},
             body:JSON.stringify(data)
         }
-    )
-    let response= await res.json();
-
+    ).then(res1=>res1.json())
+    .then(res1=>fu1(res1))
+    // let res=await fetch('http://localhost:3000/api/graphql',data)
+    let response= "await res.data"
+    
+    
 
     return{
         props:{
-            response
-        }
+            response:xx
+       }
     }
 }

@@ -2,33 +2,38 @@ import mongoose,{Model,Schema,model} from "mongoose";
 const mongoosePaginate= require("mongoose-paginate");
 const bcrypt=require('bcrypt');
 const jwt=require('jsonwebtoken');
-const e = require("express");
 import {NextApiRequest} from "next"
+
+// DB connection
+mongoose.set('strictQuery', false)
+mongoose.connect('mongodb://localhost:27017/test')
+.then(()=>console.log("connect to db"))
+.catch((err)=>console.log(err))
+mongoose.Promise= global.Promise;
 
 interface IUser{
     name:string
     email:string
     password:string
 }
-
 interface IUserMethods{
     comparePassword(password:string):any
 }
-
 interface UserModel extends Model<IUser, {}, IUserMethods>{
     checkToken(req:NextApiRequest,api_secret_key:string):object
-    createToken(user:object,api_secret_key:string,expiresIn:Date):string
+    createToken(user:object,api_secret_key:string,expiresIn:string):string
     hashPassword(password:string):string
 }
 
 // build schema
-const userSchema= new Schema<IUser,UserModel,IUserMethods>({
+var userSchema= new Schema<IUser,UserModel,IUserMethods>({
     name : {type : String ,required : false},
     email : {type : String , required :true},
     password : {type : String , required :true}
 },{timestamps:true})
 
 //write method and static method for new schema
+
 userSchema.method('comparePassword',function comparePassword(password){
     return bcrypt.compareSync(password,this.password)
 })
@@ -61,8 +66,17 @@ userSchema.static('hashPassword',function hashPassword(password){
 // set mongoosepaginate as plugin for paginatethe result of response of api
 userSchema.plugin(mongoosePaginate)
 
+
 //export model "User" with use collection of 'user'
-export default model<IUser,UserModel>('User',userSchema,"user");
+let User;
+try {
+    User=model<IUser,UserModel>('User',userSchema,"user")
+} catch (error) {
+    // console.log(error)
+    User=mongoose.models.User
+}
+module.exports= User;
+
 
 
 

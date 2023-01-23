@@ -39,7 +39,7 @@ export default function Login(){
 export const getServerSideProps:GetServerSideProps=async()=> {
     return{
         props:{
-
+            
         }
     }
 

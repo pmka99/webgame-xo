@@ -13,6 +13,7 @@
     "noEmit": true,
     "esModuleInterop": true,
     "module": "ESNext",
+    //next
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -24,7 +25,7 @@
     "**/*.ts",
     "**/*.tsx",
     "src/server/schema.graphql"
-   ],
+  ],
   "exclude": [
     "node_modules"
   ]
