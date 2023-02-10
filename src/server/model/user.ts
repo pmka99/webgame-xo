@@ -4,13 +4,6 @@ const bcrypt=require('bcrypt');
 const jwt=require('jsonwebtoken');
 import {NextApiRequest} from "next"
 
-// DB connection
-mongoose.set('strictQuery', false)
-mongoose.connect('mongodb://localhost:27017/test')
-.then(()=>console.log("connect to db"))
-.catch((err)=>console.log(err))
-mongoose.Promise= global.Promise;
-
 interface IUser{
     name:string
     email:string

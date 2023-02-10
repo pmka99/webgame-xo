@@ -1,10 +1,9 @@
-import axios from "axios";
-import bodyParser from "body-parser";
 import { GetServerSideProps } from "next";
-import { NoFallbackError } from "next/dist/server/base-server";
+import path from "path";
 import { useEffect } from "react";
-import { Context } from "vm";
-// import fetch from 'node-fetch'
+// import socketIoClient,{io}from 'socket.io-client';
+// import SocketIOClient from 'socket.io-client'
+
 var xx={};
 const fu1=(x:any)=>{
     xx=x;
@@ -12,6 +11,23 @@ const fu1=(x:any)=>{
 
 export default function Hello({response}:any){
     console.log(response)
+
+    useEffect(()=>{
+        // useSocket();
+    },[])
+
+    // const useSocket=async()=>{
+    //         const socket=io();
+    //         socket.on("connect",()=>{
+    //             socket.emit("hello",{ar:"addsfsdfsdf"})
+    //         })
+    //     }
+        
+        
+        // socket.on("connection",()=>console.log("connectedddddd"))
+        // socket.on("hello",(args:string)=>console.log(args))
+        // console.log("sadasd")
+    
 
     return(
         <>  

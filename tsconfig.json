@@ -12,7 +12,7 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
-    "module": "ESNext",
+    "module": "CommonJS",
     //next
     "moduleResolution": "node",
     "resolveJsonModule": true,

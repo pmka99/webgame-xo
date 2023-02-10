@@ -1,8 +1,46 @@
-import React, { useEffect, useState } from "react"
-import style1 from '../styles/login.module.css'
+import React, { FormEvent, useEffect, useState } from "react"
+import style1 from '../styles/login.module.css';
+import {Container, FormControl, FormLabel, InputLabel, MenuItem, TextField,SelectChangeEvent, Button } from '@mui/material'
 import {GetServerSideProps} from 'next'
+import {styled} from '@mui/material/styles'
+import {Select} from '@mui/material'
+import { margin } from "@mui/system";
 
+const SelectTag=styled(Select)(({theme})=>({
+    margin:'3px',
+    backgroundColor:'white',
+    width:'100%',
+    [theme.breakpoints.down('sm')]:{
+        
+    }
+}))
 
+const ContaitnerTag=styled(Container)(({theme})=>({
+    // backgroundColor:'blue',
+    [theme.breakpoints.up('sm')]:{
+        width:'430px'
+    },
+    [theme.breakpoints.between('xs','sm')]:{
+        width:'300px'
+    },
+    [theme.breakpoints.down('xs')]:{
+        width:'100%',
+    },
+    // [theme.breakpoints.down('xs')]:{
+    //     width:'1px'
+    // },
+}))
+const TextFieldTag=styled(TextField)(({theme})=>({
+    margin:'3px',
+    backgroundColor:'white',
+    borderRadius:'4px',
+    width:'100%',
+    [theme.breakpoints.down('sm')]:{
+
+    }
+}))
+
+// const DivTag=styled()
 export default function Register(){
 
     const [width,setWidth]=useState<number>(300)
@@ -11,17 +49,19 @@ export default function Register(){
     const [email,setEmail]=useState<string>('')
     const [name,setName]=useState<string>('')
     const [password,setPassword]=useState<string>('')
+    const [gender,setGender]=useState<string>('')
 
     useEffect(()=>{
         setWidth(innerWidth);
         // console.log();
     },[])
-
-    const submit=async(e:any)=>{
+    
+    
+    const register=async(e:any)=>{
         e.preventDefault();
         console.log(name,email,password)
         let data={
-            query:`
+             query:`
                 mutation($email: String!, $name: String!, $password: String!){
                     register(email: $email, name: $name, password: $password) {
                         token
@@ -44,27 +84,26 @@ export default function Register(){
     }
 
     return(
-        <div className={style1.login}>
-            <div className={style1.loginDivMain}>
-                <div className={style1.loginDiv2}>
-                    <form onSubmit={e=>submit(e)} className={style1.loginForm}>
-                        <h4>register</h4>
-                        <div className="mb-3">
-                            <label className="form-label" htmlFor="email">Enter Your Email :</label>
-                            <input onChange={e=>setEmail(e.target.value)} className="form-control" type="email" name="email" required />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label" htmlFor="username">Enter Your Username :</label>
-                            <input onChange={e=>setName(e.target.value)} className="form-control" type="text" name="username" required />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label" htmlFor="pass">Enter Your Password :</label>
-                            <input onChange={e=>setPassword(e.target.value)} className="form-control" type="password" name="pass" required />
-                        </div>
-                            <input className="btn btn-primary" type="submit" value="register" />
-                    </form>
-                </div>
-            </div>
+        <div>
+            <ContaitnerTag>
+                <FormLabel style={{fontWeight:'bold',color:'red'}}>Register</FormLabel>
+                <TextFieldTag onChange={(e:any)=>(setEmail(e.target.value))} label="Email" size="small" />
+                <TextFieldTag onChange={(e:any)=>(setName(e.target.value))} label="Username" size='small' />
+                <FormControl fullWidth>
+                    <InputLabel size="small" htmlFor="gender" style={{marginBottom:'25px'}}>
+                        <div style={{marginTop:'3px'}}>Gender</div>
+                    </InputLabel>
+                    <SelectTag label="gender" value={gender} size="small" id="gender"
+                    onChange={(e:any)=>(setGender(e.target.value))}>
+                        <MenuItem value=""><em>None</em></MenuItem>
+                        <MenuItem value="male" >male</MenuItem>
+                        <MenuItem value="female">female</MenuItem>
+                        <MenuItem value="other">other</MenuItem>
+                    </SelectTag>
+                </FormControl>
+                <TextFieldTag onChange={(e:any)=>(setPassword(e.target.value))} label="Password" size="small" />
+                <Button onClick={(e:any)=>(register(e))} color="primary" variant="contained" fullWidth style={{margin:'3px'}}>register</Button>
+            </ContaitnerTag>
         </div>
     )
 }
