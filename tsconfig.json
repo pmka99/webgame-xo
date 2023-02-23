@@ -24,7 +24,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/server/schema.graphql"
+    "src/server/schema.graphql",
+    "test/login.js"
   ],
   "exclude": [
     "node_modules"

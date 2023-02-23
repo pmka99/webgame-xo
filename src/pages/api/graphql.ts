@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import handler from '../../server/ApolloServer';
+import handler from '../../../server/ApolloServer/ApolloServer';
 type Data = {
   name: string
 }

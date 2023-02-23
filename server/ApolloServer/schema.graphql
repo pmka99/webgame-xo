@@ -1,20 +1,16 @@
 type Query{
     hello:String
-    products:[Product]
+    checkVerifyToken(token:String!):user!
 }
 type Mutation{
     login(email:String!,password:String!):Token!
     register(email:String!,name:String!,password:String!):Token!
 }
-type Product{
-    id:Int
-    name:String
-    price:Int
-}
 type Token{
     token:String
 }
 type user{
+    id:ID
     name:String
     password:String
     email:String

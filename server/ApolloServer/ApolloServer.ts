@@ -5,18 +5,19 @@ import mongoose from "mongoose";
 // import schema{resolvers,typeDefs}
 import resolvers from "./resolvers";
 import {readFileSync} from 'fs';
-const typeDefs=readFileSync('./src/server/schema.graphql',{encoding:'utf-8'})
+const typeDefs=readFileSync('./server/ApolloServer/schema.graphql',{encoding:'utf-8'})
 
 // import User (Model) from './model/user'
 const User=require('./model/user')
 
+const config = require('config')
+const dbhost=config.get("DBHost")
 // DB connection
 mongoose.set('strictQuery', false)
-mongoose.connect('mongodb://localhost:27017/test')
+mongoose.connect(dbhost)
 .then(()=>console.log("connect to db"))
 .catch((err)=>console.log(err))
 mongoose.Promise= global.Promise;
-
 
 interface MyContext {
     token?: String;

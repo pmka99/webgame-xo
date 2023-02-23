@@ -1,10 +1,6 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from '../styles/Home.module.css'
 import Home1 from './../components/home'
-const inter = Inter({ subsets: ['latin'] })
-import style1 from '../styles/login.module.css'
+
 import Link from 'next/link'
 
 
@@ -17,7 +13,8 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
+      <main>
+        
         <div>
           <Link rel="stylesheet" href="/login" style={{margin:'45%',color:'black',fontWeight:'bold'}}>login</Link>
           <br />

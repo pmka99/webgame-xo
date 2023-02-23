@@ -1,32 +1,31 @@
 import { GetServerSideProps } from "next";
 import path from "path";
 import { useEffect } from "react";
-// import socketIoClient,{io}from 'socket.io-client';
+import socketIoClient,{io}from 'socket.io-client';
 // import SocketIOClient from 'socket.io-client'
 
 var xx={};
 const fu1=(x:any)=>{
     xx=x;
 }
-
 export default function Hello({response}:any){
     console.log(response)
 
     useEffect(()=>{
-        // useSocket();
+        rSocket();
     },[])
 
-    // const useSocket=async()=>{
-    //         const socket=io();
-    //         socket.on("connect",()=>{
-    //             socket.emit("hello",{ar:"addsfsdfsdf"})
-    //         })
-    //     }
+    const rSocket=async()=>{
+            const socket=io();
+            // socket.on("connect",()=>{
+            //     socket.emit("hello",{ar:"addsfsdfsdf"})
+            // })
+            socket.on('hi',(arg)=>{
+                console.log(arg)
+            })
+        }
         
-        
-        // socket.on("connection",()=>console.log("connectedddddd"))
-        // socket.on("hello",(args:string)=>console.log(args))
-        // console.log("sadasd")
+
     
 
     return(

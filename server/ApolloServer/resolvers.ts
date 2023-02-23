@@ -1,14 +1,16 @@
-import { Context } from 'vm';
 // import User from './model/user'
-import {Resolvers} from '../generated/graphql'
+import { Token } from 'graphql';
+import {Resolvers} from './generated/graphql'
 const User=require('./model/user')
+// import User from './model/user'
 
 const resolvers:Resolvers = {
     Query: {
-      products: () => {
-        return products;
-      },
-      hello:()=>"Hi mohmmad"
+      hello:()=>"Hi mohmmad",
+      checkVerifyToken:async(parent,{token},{api_secret_key})=>{
+        let user=await User.checkVerifyToken(token,api_secret_key)
+        return user
+      }
     },
     Mutation:{
       login:async(parent,{email,password},{api_secret_key})=>{

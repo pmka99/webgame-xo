@@ -2,7 +2,7 @@ import mongoose,{Model,Schema,model} from "mongoose";
 const mongoosePaginate= require("mongoose-paginate");
 const bcrypt=require('bcrypt');
 const jwt=require('jsonwebtoken');
-import {NextApiRequest} from "next"
+import {NextApiRequest} from "next";
 
 interface IUser{
     name:string
@@ -33,7 +33,7 @@ userSchema.method('comparePassword',function comparePassword(password){
 
 userSchema.static('createToken',async function createToken(user,api_secret_key,expiresIn){
     let {email,id}=user;
-    return await jwt.sign({email,id},api_secret_key,{expiresIn})
+    return await jwt.sign({email,id},api_secret_key,{expiresIn:'2h'})
 })
 
 userSchema.static('checkToken',async function checkToken(req ,api_secret_key) {
@@ -50,6 +50,14 @@ userSchema.static('checkToken',async function checkToken(req ,api_secret_key) {
     }
 })
 
+userSchema.static('checkVerifyToken',async function checkVerifyToken(token ,api_secret_key) {
+        try {
+            return await jwt.verify(token,api_secret_key)
+        } catch (err) {
+            throw new Error("Your token is expired , login again")
+        }
+})
+
 userSchema.static('hashPassword',function hashPassword(password){
     let salt= bcrypt.genSaltSync(17);
     let hash= bcrypt.hashSync(password,salt);
@@ -58,7 +66,6 @@ userSchema.static('hashPassword',function hashPassword(password){
 
 // set mongoosepaginate as plugin for paginatethe result of response of api
 userSchema.plugin(mongoosePaginate)
-
 
 //export model "User" with use collection of 'user'
 let User;

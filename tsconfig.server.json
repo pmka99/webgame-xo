@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+    "compilerOptions": {
+      "module": "commonjs",
+      "outDir": "dist",
+      "isolatedModules": false,
+      "noEmit": false,
+      "target": "es2017",
+    },
+    "include": ["server/**/*.ts","server/**/*.graphql"]
+  }
+  
