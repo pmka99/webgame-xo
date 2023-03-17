@@ -2,6 +2,7 @@
 
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+import { io } from 'socket.io-client';
 const assert=chai.assert;
 const expect=chai.expect;
 const should=chai.should();
@@ -65,7 +66,30 @@ describe("login",()=>{
                 done()
             })
     }).timeout(50000)
-    
+    // it("join to room user1",done=>{
+    //     const io1=io("http://localhost:3000");
+    //     io1.on("connection",(socket)=>{
+    //         socket.join("1")
+    //     })
+    // })
+    // it("join to room user2",done=>{
+    //     const io1=io("http://localhost:3000");
+    //     io1.on("connection",(socket)=>{
+    //         socket.join("1")
+    //     })
+    // })
+    // it("send message to room user1",done=>{
+    //     const io1=io("http://localhost:3000");
+    //     io1.on("connection",(socket)=>{
+    //         socket.to("1").emmit()
+    //     })
+    // })
+    // it("send message to room user2",done=>{
+    //     const io1=io("http://localhost:3000");
+    //     io1.on("connection",(socket)=>{
+    //         socket.join("1")
+    //     })
+    // })
 })
 
 

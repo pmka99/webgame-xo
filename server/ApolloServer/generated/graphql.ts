@@ -16,7 +16,9 @@ export type Scalars = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createGame: Scalars['Boolean'];
   login: Token;
+  loginGame: Scalars['Boolean'];
   register: Token;
 };
 
@@ -24,6 +26,11 @@ export type Mutation = {
 export type MutationLoginArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
+};
+
+
+export type MutationLoginGameArgs = {
+  idRoom: Scalars['Int'];
 };
 
 
@@ -129,6 +136,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
@@ -140,6 +148,7 @@ export type ResolversTypes = ResolversObject<{
 export type ResolversParentTypes = ResolversObject<{
   Boolean: Scalars['Boolean'];
   ID: Scalars['ID'];
+  Int: Scalars['Int'];
   Mutation: {};
   Query: {};
   String: Scalars['String'];
@@ -148,7 +157,9 @@ export type ResolversParentTypes = ResolversObject<{
 }>;
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
+  createGame?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   login?: Resolver<ResolversTypes['Token'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'email' | 'password'>>;
+  loginGame?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationLoginGameArgs, 'idRoom'>>;
   register?: Resolver<ResolversTypes['Token'], ParentType, ContextType, RequireFields<MutationRegisterArgs, 'email' | 'name' | 'password'>>;
 }>;
 

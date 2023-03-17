@@ -1,4 +1,4 @@
-import mongoose,{Model,Schema,model} from "mongoose";
+import mongoose,{Model,Schema,model, Models, models} from "mongoose";
 const mongoosePaginate= require("mongoose-paginate");
 const bcrypt=require('bcrypt');
 const jwt=require('jsonwebtoken');
@@ -8,6 +8,11 @@ interface IUser{
     name:string
     email:string
     password:string
+    gender:string
+    winner:number
+    looser:number
+    games:number
+    gameId:number
 }
 interface IUserMethods{
     comparePassword(password:string):any
@@ -16,13 +21,19 @@ interface UserModel extends Model<IUser, {}, IUserMethods>{
     checkToken(req:NextApiRequest,api_secret_key:string):object
     createToken(user:object,api_secret_key:string,expiresIn:string):string
     hashPassword(password:string):string
+    checkVerifyToken(token:string,api_secret_key:string):IUser
 }
 
 // build schema
 var userSchema= new Schema<IUser,UserModel,IUserMethods>({
     name : {type : String ,required : false},
     email : {type : String , required :true},
-    password : {type : String , required :true}
+    password : {type : String , required :true },
+    gender: {type: String, required:false},
+    winner: {type: Number, required:true,default:0},
+    looser: {type: Number, required:true,default:0},
+    games: {type: Number, required:true,default:0},
+    gameId:{type:Number,required:true,default:-1}
 },{timestamps:true})
 
 //write method and static method for new schema
@@ -37,7 +48,7 @@ userSchema.static('createToken',async function createToken(user,api_secret_key,e
 })
 
 userSchema.static('checkToken',async function checkToken(req ,api_secret_key) {
-    let token= req.headers['x-token'];
+    let token=req.cookies.token
     if(token){
         try {
             return await jwt.verify(token,api_secret_key)
@@ -64,18 +75,28 @@ userSchema.static('hashPassword',function hashPassword(password){
     return hash;
 })
 
+
 // set mongoosepaginate as plugin for paginatethe result of response of api
 userSchema.plugin(mongoosePaginate)
 
 //export model "User" with use collection of 'user'
-let User;
-try {
-    User=model<IUser,UserModel>('User',userSchema,"user")
-} catch (error) {
-    // console.log(error)
-    User=mongoose.models.User
-}
-module.exports= User;
+
+// var User
+// try {
+//     User=model<IUser,UserModel>('User',userSchema,'user')
+// } catch (error) {
+//     User=mongoose.models.User
+// }
+
+var User=(models.User || model<IUser,UserModel>('User',userSchema,'user')) as ReturnType<typeof model<IUser,UserModel>>
+
+export {User}
+
+// module.exports=User
+
+
+
+
 
 
 

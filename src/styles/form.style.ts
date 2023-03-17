@@ -12,18 +12,20 @@ const SelectTag=styled(Select)(({theme})=>({
 }))
 const ContaitnerTag=styled(Container)(({theme})=>({
     // backgroundColor:'blue',
+    
+    fontFamily:'cursive',
     [theme.breakpoints.up('sm')]:{
-        width:'430px'
+        width:'500px',
+        marginTop:'13%',
     },
     [theme.breakpoints.between('xs','sm')]:{
-        width:'300px'
+        width:'300px',
+        marginTop:'30%',
     },
     [theme.breakpoints.down('xs')]:{
         width:'100%',
+        marginTop:'30%',
     },
-    // [theme.breakpoints.down('xs')]:{
-    //     width:'1px'
-    // },
 }))
 const TextFieldTag=styled(TextField)(({theme})=>({
     margin:'3px',

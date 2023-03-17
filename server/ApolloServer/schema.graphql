@@ -5,6 +5,8 @@ type Query{
 type Mutation{
     login(email:String!,password:String!):Token!
     register(email:String!,name:String!,password:String!):Token!
+    createGame:Boolean!
+    loginGame(idRoom:Int!):Boolean!
 }
 type Token{
     token:String
@@ -15,3 +17,6 @@ type user{
     password:String
     email:String
 }
+
+
+

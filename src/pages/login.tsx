@@ -1,16 +1,18 @@
 import { Button } from "@mui/material";
 import { GetServerSideProps } from "next";
+import { useRouter } from "next/router";
 import {  FormEvent, useEffect, useState } from "react";
 import { ContaitnerTag, TextFieldTag } from "../styles/form.style";
 
 export default function Login(){
-    const [width,setWidth]=useState<number>(300)
-    const [height,setHeight]=useState<number>(300)
+
     const [email,setEmail]=useState<string>('')
     const [password,setPassword]=useState<string>('')
 
+    const router=useRouter();
+
     useEffect(()=>{
-        setWidth(innerWidth);
+        
     },[])
 
     const login=async(e:FormEvent)=>{
@@ -35,6 +37,10 @@ export default function Login(){
         })
         let response=await res.json()
         console.log(response)
+        if(response.data!==null){
+            console.log("yesss")
+            router.push("/select-room")
+        }
     }
 
     return(

@@ -2,21 +2,20 @@ import React, { FormEvent, useEffect, useState } from "react"
 import {GetServerSideProps} from 'next';
 import { SelectTag,TextFieldTag,ContaitnerTag } from "../styles/form.style";
 import { Button, FormControl, FormLabel, InputLabel, MenuItem } from "@mui/material";
+import { io, Socket } from "socket.io-client";
+import { useRouter } from "next/router";
+
+const socket=io();
 
 export default function Register(){
-    const [width,setWidth]=useState<number>(300)
-    const [height,setHeight]=useState<number>(300)
 
     const [email,setEmail]=useState<string>('')
     const [name,setName]=useState<string>('')
     const [password,setPassword]=useState<string>('')
     const [gender,setGender]=useState<string|unknown>('')
+    const [registerStatus,setRegisterStatus]=useState<boolean>(false)
 
-    useEffect(()=>{
-        setWidth(innerWidth);
-        // console.log();
-    },[])
-    
+    const router=useRouter();
     
     const register=async(e:any)=>{
         e.preventDefault();
@@ -42,11 +41,24 @@ export default function Register(){
         })
         let response= await res.json()
         console.log(response)
+        if(response.data!==null){
+            console.log("yesss")
+            router.push("/select-room")
+        }
+    //     let data={
+    //         email,
+    //         name,
+    //         password,
+    //         gender
+    //     }
+    //     socket.emit("register",data)
     }
+
 
     return(
         <div>
             <ContaitnerTag>
+
                 <FormLabel style={{fontWeight:'bold',color:'red'}}>Register</FormLabel>
                 <TextFieldTag inputProps={{style:{textAlign:'center'}}} onChange={(e)=>setEmail(e.target.value)} label="Email" size="small" />
                 <TextFieldTag inputProps={{style:{textAlign:'center'}}} onChange={(e)=>setName(e.target.value)} label="Username" size='small' />

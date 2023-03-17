@@ -1,5 +1,6 @@
 overwrite: true
 schema: './server/ApolloServer/schema.graphql'
+      
 
 generates:
   server/ApolloServer/generated/graphql.ts:
